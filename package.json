@@ -3,12 +3,12 @@
   "name": "cypto-tracker",
   "version": "1.0.0",
   "scripts": {
-    "start": "gulp watch",
+    "start": "node server/server.js",
     "serve": "live-server",
     "build": "webpack --watch",
-    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+    "build:prod": "webpack -p --env production"
   },
-  "description": "An open source Bootstrap 4 admin theme.",
+  "description": "A real time crypto currency ticker",
   "keywords": [
     "css",
     "sass",
@@ -41,6 +41,7 @@
     "bootstrap": "4.3.1",
     "chart.js": "2.8.0",
     "datatables.net-bs4": "1.10.19",
+    "express": "^4.17.1",
     "jquery": "3.4.1",
     "jquery.easing": "^1.4.1",
     "live-server": "^1.2.1",
