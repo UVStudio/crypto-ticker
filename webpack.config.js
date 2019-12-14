@@ -18,5 +18,8 @@ module.exports = {
     ]
   },
   mode: "production",
-  devtool: "cheap-module-eval-source-map"
+  performance: {
+    hints: false
+  }
+  //devtool: "cheap-module-eval-source-map"
 };
