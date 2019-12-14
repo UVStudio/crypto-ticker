@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node server/server.js",
+    "heroku-postbuild": "npm run build:prod",
     "serve": "live-server",
     "build": "webpack --watch",
     "build:prod": "webpack -p --env production"
