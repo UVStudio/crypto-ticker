@@ -13,7 +13,8 @@ export default class Tracker extends React.Component {
                   {name}
                 </div>
                 <div className="h5 mb-0 font-weight-bold text-gray-800">
-                  {price}
+                  <span class="text-info">$</span> {price}
+                  <span class="text-info"> USD</span>
                 </div>
               </div>
               <button

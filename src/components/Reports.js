@@ -50,6 +50,7 @@ export default class Reports extends React.Component {
         for (let i = 0; i < this.state.currencies.length; i++) {
           if (this.state.currencies[i].name === curr) {
             this.state.currencies[i].price = priceStream;
+            console.log(priceStream);
           }
         }
         this.setState({ currencies: this.state.currencies });
