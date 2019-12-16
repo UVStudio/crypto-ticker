@@ -50,7 +50,7 @@ export default class Reports extends React.Component {
         for (let i = 0; i < this.state.currencies.length; i++) {
           if (this.state.currencies[i].name === curr) {
             this.state.currencies[i].price = priceStream;
-            console.log(priceStream);
+            //console.log(priceStream);
           }
         }
         this.setState({ currencies: this.state.currencies });
@@ -76,12 +76,12 @@ export default class Reports extends React.Component {
     this.setState({
       currencies: newCurrencies
     });
-    console.log(newCurrencies);
+    //console.log(newCurrencies);
     for (let i = 0; i < newCurrencies.length; i++) {
       newCurrencies[i].id = i;
       currNames.push(newCurrencies[i].name);
     }
-    console.log(currNames);
+    //console.log(currNames);
     currNames.forEach(curr => {
       const socket = new WebSocket(`wss://ws.coincap.io/prices?assets=${curr}`);
       socket.onmessage = e => {
