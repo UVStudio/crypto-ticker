@@ -1,4 +1,5 @@
 import React from "react";
+import DropDownItem from "./DropDownItem";
 
 const cryptoNamesArray = [];
 fetch("https://api.coincap.io/v2/assets")
@@ -9,11 +10,22 @@ fetch("https://api.coincap.io/v2/assets")
   })
   .catch(error => console.log(error));
 
+const testArray = ["apples", "oranges", "honey"];
+
 export default class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputField: ""
+      inputField: "",
+      results: [
+        "bitcoin",
+        "ethereum",
+        "ripple",
+        "tether",
+        "bitcoin-coin",
+        "litecoin",
+        "eos"
+      ]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,8 +36,17 @@ export default class SearchForm extends React.Component {
     event.preventDefault();
     this.props.searchResult(this.state.inputField);
     this.setState({
-      inputField: ""
+      inputField: "",
+      results: []
     });
+  }
+
+  handleFocus() {
+    document.getElementById("dropdown-menu").style.display = "block";
+  }
+
+  handleBlur() {
+    document.getElementById("dropdown-menu").style.display = "none";
   }
 
   handleChange(event) {
@@ -33,11 +54,20 @@ export default class SearchForm extends React.Component {
     const result = cryptoNamesArray.filter(str => str.includes(input));
     console.log(result);
     this.setState({
-      inputField: event.target.value
+      inputField: event.target.value,
+      results: result
     });
   }
 
   render() {
+    const dropdownList = [];
+    for (let i = 0; i < Math.min(7, this.state.results.length); i++) {
+      dropdownList.push(
+        <li className="dropdown-item" key={i}>
+          {this.state.results[i]}
+        </li>
+      );
+    }
     return (
       <div>
         <form
@@ -50,21 +80,15 @@ export default class SearchForm extends React.Component {
               id="search-field"
               value={this.state.inputField}
               onChange={this.handleChange}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
               className="form-control bg-light border-0 small"
               placeholder="Search for..."
               aria-label="Search"
               aria-describedby="basic-addon2"
             />
-            <ul className="dropdown-menu">
-              <li className="dropdown-item" href="#">
-                test
-              </li>
-              <li className="dropdown-item" href="#">
-                test
-              </li>
-              <li className="dropdown-item" href="#">
-                test
-              </li>
+            <ul className="dropdown-menu" id="dropdown-menu">
+              {dropdownList}
             </ul>
             <div className="input-group-append">
               <button className="btn btn-primary" type="submit">
