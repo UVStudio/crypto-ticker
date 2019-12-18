@@ -7,7 +7,6 @@ import TwoCharts from "./components/TwoCharts";
 import Reports from "./components/Reports";
 import ScrollToTop from "./components/ScrollToTop";
 import SearchForm from "./components/SearchForm";
-//import AdditionalReports from "./components/AdditionalReports";
 
 class Content extends React.Component {
   constructor() {
@@ -70,9 +69,7 @@ class Content extends React.Component {
                 </form>
               </div>
             </li>
-            <h5 className="mr-2 d-none d-lg-inline text-gray-600">
-              Cryptocurrencies Tracker App
-            </h5>
+            <h5 className="mr-2 d-none d-lg-inline text-gray-600">Cryptick</h5>
           </ul>
         </nav>
 

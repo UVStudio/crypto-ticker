@@ -1,5 +1,4 @@
 import React from "react";
-import DropDownItem from "./DropDownItem";
 
 const cryptoNamesArray = [];
 fetch("https://api.coincap.io/v2/assets")
@@ -10,26 +9,29 @@ fetch("https://api.coincap.io/v2/assets")
   })
   .catch(error => console.log(error));
 
-const testArray = ["apples", "oranges", "honey"];
+const topCryptos = [
+  "bitcoin",
+  "ethereum",
+  "ripple",
+  "tether",
+  "bitcoin-coin",
+  "litecoin",
+  "eos"
+];
 
 export default class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputField: "",
-      results: [
-        "bitcoin",
-        "ethereum",
-        "ripple",
-        "tether",
-        "bitcoin-coin",
-        "litecoin",
-        "eos"
-      ]
+      results: topCryptos
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
   handleSubmit(event) {
@@ -43,19 +45,39 @@ export default class SearchForm extends React.Component {
 
   handleFocus() {
     document.getElementById("dropdown-menu").style.display = "block";
+    this.setState({
+      inputField: "",
+      results: topCryptos
+    });
   }
 
   handleBlur() {
-    document.getElementById("dropdown-menu").style.display = "none";
+    setTimeout(() => {
+      this.setState({
+        results: []
+      });
+    }, 200);
   }
 
   handleChange(event) {
-    const input = event.target.value;
+    event.preventDefault();
+    const input = event.target.value.toLowerCase();
     const result = cryptoNamesArray.filter(str => str.includes(input));
-    console.log(result);
     this.setState({
-      inputField: event.target.value,
+      inputField: event.target.value.toLowerCase(),
       results: result
+    });
+    if (result.length < 1) {
+      document.getElementById("dropdown-menu").style.display = "none";
+    }
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    document.getElementById("dropdown-menu").style.display = "none";
+    this.setState({
+      inputField: event.target.innerHTML.toLowerCase(),
+      results: topCryptos
     });
   }
 
@@ -63,7 +85,7 @@ export default class SearchForm extends React.Component {
     const dropdownList = [];
     for (let i = 0; i < Math.min(7, this.state.results.length); i++) {
       dropdownList.push(
-        <li className="dropdown-item" key={i}>
+        <li className="dropdown-item click" onClick={this.handleClick} key={i}>
           {this.state.results[i]}
         </li>
       );
@@ -86,6 +108,7 @@ export default class SearchForm extends React.Component {
               placeholder="Search for..."
               aria-label="Search"
               aria-describedby="basic-addon2"
+              autoComplete="off"
             />
             <ul className="dropdown-menu" id="dropdown-menu">
               {dropdownList}
